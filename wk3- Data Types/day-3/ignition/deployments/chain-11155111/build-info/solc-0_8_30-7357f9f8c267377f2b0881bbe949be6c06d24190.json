@@ -1,0 +1,49 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_30-7357f9f8c267377f2b0881bbe949be6c06d24190",
+  "solcVersion": "0.8.30",
+  "solcLongVersion": "0.8.30+commit.73712a01",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.9.1"
+  },
+  "userSourceNameMap": {
+    "contracts/Adashe.sol": "project/contracts/Adashe.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "prague",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/Adashe.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.28;\n\n\ncontract Adashe{\n    uint8 public noOfPeople;\n    uint8 public maxPeople;\n    uint256 public amountPerHead;\n    uint64 public duration;\n    uint8 currentTurn;\n\n    enum Packed{\n        PENDING,\n        Packed\n    }\n\n    struct Person{\n        string name;\n        address addr;\n        uint256 turn;\n\n    }\n\n    mapping (uint8 => Person) adashePeople;\n\n    constructor(uint8 _maxAmountOfPeople, uint _amount, uint64 _duration) {\n        maxPeople = _maxAmountOfPeople;\n        amountPerHead = _amount; \n        duration = _duration;       \n    }\n\n modifier adasheIsNotEmpty(string memory name) {\n     require(noOfPeople <= maxPeople, \"Adashe is full\");\n     \n        _;\n    }\n    function registerForAdashe(string memory _name) public adasheIsNotEmpty(_name) returns(uint turn_){\n\n        noOfPeople++;\n        currentTurn++;\n        require(msg.sender != address(0), \"address zero detected\");\n        \n\n        adashePeople[noOfPeople] = Person({\n            name : _name,\n            addr : msg.sender,\n            turn : currentTurn\n        });\n      \n\n        turn_ = currentTurn;\n        \n        return turn_;\n\n    }\n\n    function getAdasheMember(uint8 _personId) public view returns(Person memory person_){\n        // reading from a mapping\n        person_ = adashePeople[_personId];\n\n    }\n\n}\n"
+      }
+    }
+  }
+}

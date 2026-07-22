@@ -1,16 +1,13 @@
+import './App.css'
+import Home from './Home';
+import Swap from './Swap';
+
 import '@rainbow-me/rainbowkit/styles.css';
-import {
-  getDefaultConfig,
-  RainbowKitProvider,
-} from '@rainbow-me/rainbowkit';
+import {  getDefaultConfig,  RainbowKitProvider,} from '@rainbow-me/rainbowkit';
 import { WagmiProvider } from 'wagmi';
-import {
-  sepolia,
-} from 'wagmi/chains';
-import {
-  QueryClientProvider,
-  QueryClient,
-} from "@tanstack/react-query";
+import {sepolia,} from 'wagmi/chains';
+import {QueryClientProvider,QueryClient,} from "@tanstack/react-query";
+
 
 
 // configuration for wagmi and rainbowkit
@@ -23,12 +20,10 @@ const config = getDefaultConfig({
 });
 
 
-import './App.css'
-import Home from './Home';
-import Swap from './Swap';
-
 function App() {
+  
   const queryClient = new QueryClient();
+
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={

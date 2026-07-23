@@ -8,11 +8,11 @@ import { Cards } from '../components/Cards';
 const Home: NextPage = () => {
   return (
     <div className="">
-      <Header />
+
       <main className="">
         <Cards />
-        </main>
-      <footer>Footer</footer>
+      </main>
+  
     </div>
   );
 };

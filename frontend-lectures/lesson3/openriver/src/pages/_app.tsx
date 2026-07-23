@@ -7,6 +7,7 @@ import { WagmiProvider } from 'wagmi';
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit';
 
 import { config } from '../wagmi';
+import DashboardLayout from './layout';
 
 const client = new QueryClient();
 
@@ -15,7 +16,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiProvider config={config}>
       <QueryClientProvider client={client}>
         <RainbowKitProvider>
-          <Component {...pageProps} />
+          <DashboardLayout>
+            <Component {...pageProps} />
+          </DashboardLayout>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

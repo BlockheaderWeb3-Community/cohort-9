@@ -7,6 +7,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'randompicturegenerator.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
     ],
   },
 };

@@ -92,7 +92,7 @@ contract MyNFTTest is Test {
         nft.transferFrom(alice, bob, tokenId);
 
         assertEq(nft.ownerOf(tokenId), bob);
-        assertEq(nft.balanceOf(alice), 0);
+        assertEq(nft.balanceOf(alice), 0);eee
         assertEq(nft.balanceOf(bob), 1);
         // Approval must be cleared by the transfer itself.
         assertEq(nft.getApproved(tokenId), address(0));

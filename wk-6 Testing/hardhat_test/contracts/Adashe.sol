@@ -62,19 +62,14 @@ contract Adashe {
     }
 
     modifier adasheIsNotFull() {
-        // if (noOfPeople >= maxPeople) revert AdasheFull();
-        require(noOfPeople < maxPeople, "AdasheFull");
+        if (noOfPeople >= maxPeople) revert AdasheFull();
         _;
     }
 
     /// @notice Register for the savings circle. Turn order follows registration order.
     function registerForAdashe(string calldata _name) public adasheIsNotFull returns (uint256 turn_) {
-        // if (isRegistered[msg.sender]) revert AlreadyRegistered();
-        // if (bytes(_name).length == 0) revert EmptyName();
-        
-        
-        require(!isRegistered[msg.sender], "AlreadyRegistered");
-        require(bytes(_name).length > 0, "EmptyName");
+        if (isRegistered[msg.sender]) revert AlreadyRegistered();
+        if (bytes(_name).length == 0) revert EmptyName();
         noOfPeople++;
 
         uint8 personId = noOfPeople;
@@ -101,9 +96,9 @@ contract Adashe {
 
     /// @notice Pay your contribution for the current round.
     function contribute() external payable {
-        if (status != Packed.PACKED) revert AdasheNotPacked();
+        if (status != Packed.PACKED) revert AdasheNotPacked(); // must be PACKED: registering the last member calls _packAdashe(), which starts the round
         if (!isRegistered[msg.sender]) revert NotRegistered();
-        if (block.timestamp > roundStartTime + duration) revert RoundExpired();
+        if (block.timestamp > roundStartTime + duration) revert RoundExpired(); // roundStartTime is set at pack time, so the deadline is (packTime + duration)
 
         uint8 personId = memberId[msg.sender];
         Person storage person = adashePeople[personId];

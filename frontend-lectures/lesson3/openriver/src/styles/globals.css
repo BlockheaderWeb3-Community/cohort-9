@@ -1,1 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
+
+/* Basic reset and color variables */
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --border-color: #334155;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  color: #f8fafc;
+  min-height: 100vh;
+}
+
+/* Simple container panel style for cards and sections */
+.simple-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+/* Simple input field style */
+.simple-input {
+  background-color: #0f172a;
+  border: 1px solid #334155;
+  color: #ffffff;
+}
+
+.simple-input:focus {
+  outline: none;
+  border-color: #38bdf8;
+}
+
+/* Simple primary button style */
+.btn-primary {
+  background-color: #0284c7;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #0369a1;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Simple secondary button style */
+.btn-secondary {
+  background-color: #334155;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.btn-secondary:hover {
+  background-color: #475569;
+}
+
+/* Simple red danger button style */
+.btn-danger {
+  background-color: #dc2626;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 8px;
+}
+
+.btn-danger:hover {
+  background-color: #b91c1c;
+}

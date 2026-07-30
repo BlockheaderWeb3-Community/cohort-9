@@ -43,7 +43,7 @@ describe("Deployment Successful", function () {
     });
 });
 
-describe.only("Registering a new member", function () {
+describe("Registering a new member", function () {
     it("Should register a new member", async function () {
        await adashe.connect(addr1).registerForAdashe("John Doe");
        expect(await adashe.noOfPeople()).to.equal(1);
@@ -74,6 +74,249 @@ describe.only("Registering a new member", function () {
         await adashe.connect(addr3).registerForAdashe("Jim Doe");
         await expect(adashe.connect(addr4).registerForAdashe("Jack Doe")).to.be.revertedWith("AdasheFull");
     });
+});
+
+describe("Contribution", function () {
+
+    beforeEach(async function () {
+
+        adashe = await ethers.deployContract(
+            "Adashe",
+            [maxPeople, amountPerHead, duration]
+        );
+
+        [owner, addr1, addr2, addr3, addr4] =
+            await ethers.getSigners();
+
+    });
+
+    it("Should revert if Adashe is not packed", async function () {
+
+    await expect(
+
+        adashe.connect(addr1).contribute({
+
+            value: amountPerHead
+
+        })
+
+    )
+
+    .to.be.revertedWithCustomError(
+
+        adashe,
+
+        "AdasheNotPacked"
+
+    );
+
+});
+
+it("Should revert if sender is not registered", async function () {
+
+    await adashe.connect(addr1).registerForAdashe("John");
+
+    await adashe.connect(addr2).registerForAdashe("Jane");
+
+    await adashe.connect(addr3).registerForAdashe("Peter");
+
+    await expect(
+
+        adashe.connect(owner).contribute({
+
+            value: amountPerHead
+
+        })
+
+    )
+
+    .to.be.revertedWithCustomError(
+
+        adashe,
+
+        "NotRegistered"
+
+    );
+
+});
+it("Should revert if amount is incorrect", async function () {
+
+    await adashe.connect(addr1).registerForAdashe("John");
+
+    await adashe.connect(addr2).registerForAdashe("Jane");
+
+    await adashe.connect(addr3).registerForAdashe("Peter");
+
+    await expect(
+
+        adashe.connect(addr1).contribute({
+
+            value: ethers.parseEther("0.5")
+
+        })
+
+    )
+
+    .to.be.revertedWithCustomError(
+
+        adashe,
+
+        "InvalidAmount"
+
+    );
+
+});
+it("Should revert if member already paid", async function () {
+
+    await adashe.connect(addr1).registerForAdashe("John");
+
+    await adashe.connect(addr2).registerForAdashe("Jane");
+
+    await adashe.connect(addr3).registerForAdashe("Peter");
+
+    await adashe.connect(addr1).contribute({
+
+        value: amountPerHead
+
+    });
+
+    await expect(
+
+        adashe.connect(addr1).contribute({
+
+            value: amountPerHead
+
+        })
+
+    )
+
+    .to.be.revertedWithCustomError(
+
+        adashe,
+
+        "AlreadyPaid"
+
+    );
+
+});
+// it("Should revert if round has expired", async function () {
+
+//     await adashe.connect(addr1).registerForAdashe("John");
+
+//     await adashe.connect(addr2).registerForAdashe("Jane");
+
+//     await adashe.connect(addr3).registerForAdashe("Peter");
+
+//     await network.provider.send(
+
+//         "evm_increaseTime",
+
+//         [Number(duration) + 10]
+
+//     );
+
+//     await network.provider.send(
+
+//         "evm_mine"
+
+//     );
+
+//     await expect(
+
+//         adashe.connect(addr1).contribute({
+
+//             value: amountPerHead
+
+//         })
+
+//     )
+
+//     .to.be.revertedWithCustomError(
+
+//         adashe,
+
+//         "RoundExpired"
+
+//     );
+
+// });
+it("Should allow a member to contribute", async function () {
+
+    await adashe.connect(addr1).registerForAdashe("John");
+
+    await adashe.connect(addr2).registerForAdashe("Jane");
+
+    await adashe.connect(addr3).registerForAdashe("Peter");
+
+    await expect(
+
+        adashe.connect(addr1).contribute({
+
+            value: amountPerHead
+
+        })
+
+    )
+
+    .to.emit(
+
+        adashe,
+
+        "ContributionReceived"
+
+    )
+
+    .withArgs(
+
+        addr1.address,
+
+        1,
+
+        amountPerHead
+
+    );
+
+    const member = await adashe.getAdasheMember(1);
+
+    expect(member.hasPaid).to.equal(true);
+
+});
+it("Should distribute payout after everyone contributes", async function () {
+
+    await adashe.connect(addr1).registerForAdashe("John");
+
+    await adashe.connect(addr2).registerForAdashe("Jane");
+
+    await adashe.connect(addr3).registerForAdashe("Peter");
+
+    await expect(
+
+        async () => {
+
+            await adashe.connect(addr1).contribute({
+
+                value: amountPerHead
+
+            });
+
+            await adashe.connect(addr2).contribute({
+
+                value: amountPerHead
+
+            });
+
+            await adashe.connect(addr3).contribute({
+
+                value: amountPerHead
+
+            });
+
+        }
+
+    )
+
+});
+
 });
     
 });

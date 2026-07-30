@@ -62,17 +62,12 @@ contract Adashe {
     }
 
     modifier adasheIsNotFull() {
-        // if (noOfPeople >= maxPeople) revert AdasheFull();
         require(noOfPeople < maxPeople, "AdasheFull");
         _;
     }
 
     /// @notice Register for the savings circle. Turn order follows registration order.
     function registerForAdashe(string calldata _name) public adasheIsNotFull returns (uint256 turn_) {
-        // if (isRegistered[msg.sender]) revert AlreadyRegistered();
-        // if (bytes(_name).length == 0) revert EmptyName();
-        
-        
         require(!isRegistered[msg.sender], "AlreadyRegistered");
         require(bytes(_name).length > 0, "EmptyName");
         noOfPeople++;

@@ -7,10 +7,12 @@ type LayoutProps = {
 
 export default function DashboardLayout({ children }: LayoutProps) {
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8fafc' }}>
-        <Header/>
+    <div className="min-h-screen bg-[#0a0a0f]">
+      <Header />
       <main>{children}</main>
-          <footer>Footer</footer>
+      <footer className="mt-16 border-t border-white/10 py-8 text-center text-sm text-slate-600">
+        © 2024 OpenRiver · Built on Sepolia
+      </footer>
     </div>
   )
 }

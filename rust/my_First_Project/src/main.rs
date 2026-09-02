@@ -6,6 +6,7 @@ fn main() {
     // println!("Hello, world!");
     // println!("Guess the number!");
     // let number = rand::rng().random_range(1..=100);
+    // let number = rand::thread_rng().gen_range(1..=100);
 
     // println!("Please input your guess.");
 
@@ -74,4 +75,5 @@ fn main() {
         }
 
     }
+    println!("The number was: {fixed_number}");
 }

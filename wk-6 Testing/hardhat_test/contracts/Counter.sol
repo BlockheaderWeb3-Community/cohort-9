@@ -26,9 +26,15 @@ contract Counter {
   }
 
   function dec() public {
-    require(x > 0, "dec: counter should be positive");
+    // require(x > 0, "dec: counter should be positive");
     x--;
     emit Decrement(1);
   }
-  
+
+  function decBy(uint by) public {
+    require(by > 0, "decBy: decrement should be positive");
+    x -= by;
+    emit Decrement(by);
+  }
+
 }

@@ -8,10 +8,10 @@ const Header = () => {
       <div className="font-extrabold text-4xl text-blue-700">Open River</div>
       <div className="flex gap-5">
         <Link href={"/"}>Home</Link>
+        <Link href={"/dashboard"}>Dashboard</Link>
         <Link href={"/mint"}>Minting</Link>
         <Link href={"/list"}>Listing</Link>
         <Link href={"/myNFT"}>MyNFTs</Link>
-
       </div>
       <div className="cta"><ConnectButton/></div>
     </div>

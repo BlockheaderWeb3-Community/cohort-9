@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.28;
 
-/// @title Adashe
-/// @notice A rotating savings circle (ROSCA): members register, contribute each round,
-///         and the pooled amount goes to the member whose turn matches the current round.
 contract Adashe {
     uint8 public noOfPeople;
     uint8 public maxPeople;
@@ -62,17 +59,11 @@ contract Adashe {
     }
 
     modifier adasheIsNotFull() {
-        // if (noOfPeople >= maxPeople) revert AdasheFull();
         require(noOfPeople < maxPeople, "AdasheFull");
         _;
     }
 
-    /// @notice Register for the savings circle. Turn order follows registration order.
     function registerForAdashe(string calldata _name) public adasheIsNotFull returns (uint256 turn_) {
-        // if (isRegistered[msg.sender]) revert AlreadyRegistered();
-        // if (bytes(_name).length == 0) revert EmptyName();
-        
-        
         require(!isRegistered[msg.sender], "AlreadyRegistered");
         require(bytes(_name).length > 0, "EmptyName");
         noOfPeople++;
@@ -99,7 +90,6 @@ contract Adashe {
         return turn_;
     }
 
-    /// @notice Pay your contribution for the current round.
     function contribute() external payable {
         if (status != Packed.PACKED) revert AdasheNotPacked();
         if (!isRegistered[msg.sender]) revert NotRegistered();
@@ -120,7 +110,6 @@ contract Adashe {
         }
     }
 
-    /// @notice Read a member by 1-based person id.
     function getAdasheMember(uint8 _personId) public view returns (Person memory person_) {
         if (_personId == 0 || _personId > noOfPeople) revert InvalidPersonId();
         person_ = adashePeople[_personId];

@@ -2,34 +2,23 @@ import { NextPage } from "next";
 import { Cards } from "../../components/Cards";
 import { useReadContract } from "wagmi";
 import { openriverAbi, openriverAddress } from "../../contracts";
-import { useEffect, useState } from "react";
 
 const MyNFT: NextPage = () => {
-    const [nftsNum, setNftsNum] = useState<bigint | null>()
-
-    const { data: nftmaxNum } = useReadContract({
+    const { data } = useReadContract({
         abi: openriverAbi,
         address: openriverAddress,
         functionName: "tokenIds",
-    }) as any
+    });
 
-    useEffect(() => {
-        setNftsNum(nftmaxNum)
-    }, [nftmaxNum])
+    const nftmaxNum = data as bigint | undefined;
 
-    useEffect(() => {
-        setNftsNum(nftmaxNum)
-    }, [nftmaxNum])
-
-
+    // nftmaxNum is bigint | undefined — pass directly to Cards
     return (
-        <div className="">
-
-            <p>{nftsNum?.toString()}</p>
-            <main className="">
-                <Cards nftNum={nftsNum} />
+        <div>
+            <p>{nftmaxNum?.toString()}</p>
+            <main>
+                <Cards nftNum={nftmaxNum} />
             </main>
-
         </div>
     );
 };

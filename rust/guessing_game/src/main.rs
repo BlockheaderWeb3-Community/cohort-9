@@ -5,7 +5,7 @@ use std::cmp::Ordering;
 use rand::RngExt;
 
 fn main() {
-    println!("   Welcome to Guess the Number!");
+    println!("Welcome to Guess the Number!");
     println!("Pick a number between 1 and 50.");
     println!("You have 5 attempts. Good luck!\n");
 

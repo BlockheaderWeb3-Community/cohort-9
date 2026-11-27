@@ -44,6 +44,22 @@ describe("Test Counter Contract", function () {
 
   });
 
+ describe("Decrementing the counter", () =>{
+    it("Should decrement x by 1", async function () {
+      await counter.dec();
+      
+      const blockchainX = await counter.x();
+      
+      expect(blockchainX).to.equal(x - 1);
+    });
+
+    it("Should emit the Decrement event when calling the dec() function", async function () {
+      await expect(counter.decBy(1)).to.emit(counter, "Decrement").withArgs(1n); 
+    });
+
+
+  });
+ 
 
 
 });

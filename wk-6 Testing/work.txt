@@ -1,0 +1,5 @@
+create a staking contract that has tiers ,if someone deposits amount of eth and get tier 1 nft and if one deposits more than 10 eth e gets tier 2 and so on up till tier 3 ,
+
+in withdrawal factor in the lock time ,user should be able to set the lock time for his amount
+and emergency withdrawal should be possible 
+if staking time is due nft should be burnt and amount be released

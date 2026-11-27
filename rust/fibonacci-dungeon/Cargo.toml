@@ -1,0 +1,15 @@
+[package]
+name = "fibonacci_dungeon"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "fibonacci_dungeon"
+path = "src/main.rs"
+
+[[bin]]
+name = "fibonacci_dungeon_gui"
+path = "src/gui.rs"
+
+[dependencies]
+eframe = "0.36.1"
